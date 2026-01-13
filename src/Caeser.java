@@ -1,5 +1,4 @@
-public class Caesar {
-
+public class Caeser {
 
     public static String encrypt(String word, int key) {
         StringBuilder encryptedWord = new StringBuilder();
@@ -52,17 +51,6 @@ public class Caesar {
         }
 
         return decryptedWord.toString();
-    }
-
-    public static void main(String[] args) {
-        int key = 3;
-        String word = "abcdefghijklmnopqrstuvwxyz";
-
-        System.out.println(encrypt(word, key));
-
-        word = encrypt(word, key);
-
-        System.out.println(decrypt(word, key));
     }
 
 }

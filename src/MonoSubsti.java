@@ -1,32 +1,7 @@
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 public class MonoSubsti {
-
-    public static void main(String[] args) {
-
-        //String key = "NOFRET";
-
-
-
-
-
-//        String wordToEncrypt = "DIE SCHWALBE HAT UNTER FOLTER ALLES VERRATEN STOP SOFORTIGER ABBRUCH VON OPERATION KLEOPATRA";
-        String wordToDecrypt = "ZQ EQR SJQ BZHSJBZJ, YZJ SQ-MPDZQEYZJRZJ YSPLO ZEJZJ SJQZPZP GHKJZ XS ZPQZRXZJ";
-        String key = "Dolly";
-
-        System.out.println(calcKey(""));
-        key = calcKey(key);
-
-        System.out.println(key);
-
-//        String encryptedWord = encrypt(wordToEncrypt, key);
-        String decryptedWord = decrypt(wordToDecrypt, key);
-//
-//        System.out.println("Encrypt:" + encryptedWord);
-        System.out.println("Decrypt:" + decryptedWord);
-
-
-
-
-    }
 
     public static String encrypt(String word, String key) {
 
@@ -96,8 +71,11 @@ public class MonoSubsti {
         return key;
     }
 
-    public static void countChars(String word) {
+    public static Dictionary<Character, Integer> countChars(String word) {
         StringBuilder s = new StringBuilder();
+
+        Dictionary<Character, Integer> charCounts = new Hashtable<>();
+
         for (char c : word.toCharArray()) {
             int i = 0;
 
@@ -108,8 +86,10 @@ public class MonoSubsti {
                     }
                 }
                 s.append(c);
+                charCounts.put(c, i);
             }
         }
+        return charCounts;
     }
 
 }
