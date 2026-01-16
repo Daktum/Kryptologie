@@ -52,20 +52,14 @@ public class MonoSubsti {
         char end = key.charAt(key.length()-1);
 
         StringBuilder keyBuilder = new StringBuilder(key);
-        for(int i = 1; i <= 26; i++) {
 
-            if(keyBuilder.toString().indexOf((char) (end + i)) < 0){
-                if(end + i <= 90){
-                    keyBuilder.append((char) (end + i));
-                }else{
-                    if(keyBuilder.toString().indexOf((char) (end + i -26)) < 0){
-                        keyBuilder.append((char) ((end + i) - 26));
-                    }
-                }
+        for(int i = 1; i < 26; i++) {
+            char c = (char) ((end-65+i)%26 + 65);
+            if(!(keyBuilder.toString().contains(c+ ""))){
+                keyBuilder.append(c);
             }
-
-
         }
+
         key = keyBuilder.toString();
 
         return key;

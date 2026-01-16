@@ -1,11 +1,14 @@
 public class Main {
-
     public static void main(String[] args) {
 
-        Caeser.decrypt("Test", 3);
+        String word = "DIE SCHWALBE HAT UNTER FOLTER ALLES VERRATEN STOP SOFORTIGER ABBRUCH VON OPERATION KLEOPATRA";
+        String key = MonoSubsti.calcKey("Nofretete");
 
-        MonoSubsti.countChars("Test");
+        System.out.println(key);
+
+
+        String encryptedWord = MonoSubsti.encrypt(word, MonoSubsti.calcKey(key));
+        System.out.println(encryptedWord);
 
     }
-
 }

@@ -1,6 +1,9 @@
 public class Caeser {
 
     public static String encrypt(String word, int key) {
+
+        if(key < 1 || key > 25) return null;
+
         StringBuilder encryptedWord = new StringBuilder();
 
         if (!word.isEmpty()) {
@@ -22,6 +25,9 @@ public class Caeser {
     }
 
     public static String decrypt(String word, int key) {
+
+        if(key < 1 || key > 25) return null;
+
         StringBuilder decryptedWord = new StringBuilder();
 
         if (!word.isEmpty()) {
@@ -49,7 +55,6 @@ public class Caeser {
 
             }
         }
-
         return decryptedWord.toString();
     }
 
