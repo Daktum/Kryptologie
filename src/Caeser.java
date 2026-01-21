@@ -11,10 +11,10 @@ public class Caeser {
                 if (c != ' '){
 
                     if((int) c >= 97){
-                        int shiftedCharCode = (((c - 97) + key) % 26) + 97;
+                        int shiftedCharCode = encryptChar(c, key, 97);
                         encryptedWord.append((char) shiftedCharCode);
                     }else if ((int) c <= 90){
-                        int shiftedCharCode = (((c - 65) + key) % 26) + 65;
+                        int shiftedCharCode = encryptChar(c, key, 65);
                         encryptedWord.append((char) shiftedCharCode);
                     }
 
@@ -43,7 +43,7 @@ public class Caeser {
 
                         decryptedWord.append((char) shiftedCharCode);
                     }else if ((int) c <= 90){
-                        int shiftedCharCode = (((c - 65) - key) % 26) + 65;
+                        int shiftedCharCode = decryptChar(c, key, 65);
 
                         if(shiftedCharCode < 65){
                             shiftedCharCode = shiftedCharCode + 26;
@@ -57,5 +57,14 @@ public class Caeser {
         }
         return decryptedWord.toString();
     }
+
+    public static char encryptChar(char c, int key, int shift) {
+        return (char) ((((c - shift) + key) % 26) + shift);
+    }
+
+    public static char decryptChar(char c, int key, int shift) {
+        return encryptChar(c, 26 - key, shift);
+    }
+
 
 }
