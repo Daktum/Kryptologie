@@ -4,5 +4,6 @@ public class Main {
         String vegeKey = "BIGMAC";
         System.out.println(Vigenere.encrypt(vegeWord, vegeKey));
         System.out.println(Vigenere.decrypt("Tvjpme Qollx tqexh iyx Xizjg Tnxh!", "INFO"));
+        System.out.println("test");
     }
 }
