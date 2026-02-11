@@ -3,9 +3,9 @@ import java.util.Hashtable;
 
 public class helper {
     // Counts number of Characters in a String
-    public static Dictionary<Character, Integer> countChars(String word) {
+    public static Hashtable<Character, Float> countChars(String word) {
         StringBuilder s = new StringBuilder();
-        Dictionary<Character, Integer> charCounts = new Hashtable<>();
+        Hashtable<Character, Float> charCounts = new Hashtable<>();
 
         for (char c : word.toCharArray()) {
             int i = 0;
@@ -17,7 +17,10 @@ public class helper {
                     }
                 }
                 s.append(c);
-                charCounts.put(c, i);
+                float rel = ((float) i / word.length())*100;
+                rel = ((float) Math.round(rel * 100) /100);
+                //System.out.println(rel);
+                charCounts.put(c, rel);
             }
         }
         return charCounts;
