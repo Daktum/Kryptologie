@@ -3,7 +3,7 @@ import java.util.stream.Collectors;
 
 public class Kasiski {
 
-    public static ArrayList<Integer> findDuplicates(String s) {
+    public static ArrayList<Integer> findRepeatedSequenceDistances(String s) {
         ArrayList<Integer> l = new ArrayList<>();
 
         for(int n = s.length()/2; n >= 4 ; n--) {
@@ -23,7 +23,7 @@ public class Kasiski {
         return l;
     }
 
-    public static Integer wordLength(ArrayList<Integer> num){
+    public static Integer determineMostLikelyKeyLength(ArrayList<Integer> num){
 
         ArrayList<Integer> divi = new ArrayList<>();
 
@@ -59,14 +59,27 @@ public class Kasiski {
         return storeValue;
     }
 
-    public static void frequencyAnalysis(String wholeWord, int keyLenght){
+    public static void frequencyAnalysis(String wholeWord, int keyLenght, Hashtable<Character, Float> language){
+
+        ArrayList<Hashtable<Character, Float>> out = new ArrayList<>();
 
         for (int i = 1; i <= keyLenght; i++){
             StringBuilder word = new StringBuilder();
             for (int j = 0; j <= wholeWord.length()-i; j += i){
                 word.append(wholeWord.charAt(j));
             }
-            System.out.println(helper.countChars(word.toString()));
+            //System.out.println();
+            out.add(helper.countChars(word.toString()));
+        }
+
+        for(Hashtable<Character, Float> chars : out){
+
+            chars.forEach( (k, v) -> {
+
+
+
+            });
+
         }
 
     }
