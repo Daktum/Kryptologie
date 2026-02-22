@@ -1,42 +1,32 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Skytale {
 
 
     public static String encrypt(String word, int faces) {
 
-        StringBuilder out = new StringBuilder();
+        int len = word.length();
+        char[] result = new char[len];
 
-        for (int i = 0; i <= faces; i++) {
-            for (int j = i; j < word.length(); j += faces + 1) {
-                out.append(word.charAt(j));
+        int pos = 0;
+
+        for (int i = 0; i < faces; i++) {
+            for (int j = 0; j < len - i; j += faces) {
+                result[j + i] = word.charAt(pos++);
             }
         }
 
-        return out.toString();
+        return new String(result);
     }
 
     public static String decrypt(String word, int faces) {
 
-        StringBuilder out = new StringBuilder();
-        String[] seq = splitWord(word, faces);
+        StringBuilder temp = new StringBuilder();
 
-        return seq[(seq.length) - 1];
-    }
-
-    public static String[] splitWord(String word, int keyLength) {
-        String[] out = new String[keyLength];
-        String temp = "";
-
-        for (int i = 0; i < keyLength; i++) {
-            for (int j = 0; j < word.length() - i; j += keyLength) {
-                temp += word.charAt(j + i);
+        for (int i = 0; i < faces; i++) {
+            for (int j = 0; j < word.length() - i; j += faces) {
+                temp.append(word.charAt(j + i));
             }
-            out[i] = temp;
         }
-        //System.out.println(Arrays.toString(out));
-        return out;
-    }
 
+        return temp.toString();
+    }
 }
