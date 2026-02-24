@@ -23,6 +23,7 @@ public class Kasiski {
                 }
             }
         }
+
         return distances;
     }
 
