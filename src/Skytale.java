@@ -2,30 +2,17 @@ public class Skytale {
 
     public static String encrypt(String word, int faces) {
 
-        int len = word.length();
-        char[] result = new char[len];
+        String geheim = "";
 
-        int pos = 0;
+        int windungen = word.length() / faces;
 
-        for (int i = 0; i < faces; i++) {
-            for (int j = 0; j < len - i; j += faces) {
-                result[j + i] = word.charAt(pos++);
+        for (int i = 0; i < windungen; i++) {
+            for (int j = i; j < word.length(); j += windungen) {
+                geheim = geheim + word.charAt(j);
             }
         }
 
-        if(false) {
-            String geheim = "";
-
-            int windungen = word.length() / faces;
-
-            for (int i = 0; i < windungen; i++) {
-                for (int j = i; j < word.length(); j += windungen) {
-                    geheim = geheim + word.charAt(j);
-                }
-            }
-        }
-
-        return new String(result);
+        return geheim;
     }
 
     public static String decrypt(String word, int faces) {

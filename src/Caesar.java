@@ -1,4 +1,4 @@
-public class Caeser {
+public class Caesar {
 
     public static String encrypt(String word, int key) {
         if(key < 1 || key > 25) return null;
@@ -12,7 +12,7 @@ public class Caeser {
     }
 
     public static String decrypt(String word, int key) {
-        if (key < 1 || key > 25) return null;
+        if (key > 25) return null;
         StringBuilder decryptedWord = new StringBuilder();
         if (!word.isEmpty()) {
             for (char c : word.toCharArray()) {

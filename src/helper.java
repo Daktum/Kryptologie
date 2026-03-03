@@ -1,4 +1,5 @@
 public class helper {
+
     // Counts number of Characters in a String
     public static double[] countChars(String word) {
         StringBuilder s = new StringBuilder();
@@ -23,6 +24,20 @@ public class helper {
         }
 
         return charCounts;
+    }
+
+    public static double[] berechneRelativeHaeufigkeiten(String text) {
+        int[] absH = new int[26];
+        double[] relH = new double[26];
+        int anzahl = 0;
+        for (char buchstabe : text.toCharArray()) {
+            absH[buchstabe - 65]++;
+            anzahl++;
+        }
+        for (int pos = 0; pos < 26; pos++) {
+            relH[pos] = 100.0 * absH[pos] / anzahl;
+        }
+        return relH;
     }
 
     //public static boolean checkIfLetter(char c) {
