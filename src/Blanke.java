@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class Main {
+public class Blanke {
 
     public static final double[] REL_H_ENGLISCH = {8.17, 1.49, 2.78, 4.25, 12.70, 2.23, 2.02, 6.09, 6.97, 0.15, 0.78, 4.03, 2.41, 6.75, 7.51, 1.93, 0.10, 5.99, 6.33, 9.06, 2.76, 0.98, 2.36, 0.15, 1.97, 0.07};
     public static final double[] REL_H_DEUTSCH = {6.51, 1.89, 3.06, 5.08, 17.40, 1.66, 3.01, 4.76, 7.55, 0.27, 1.21, 3.44, 2.53, 9.78, 2.51, 0.79, 0.02, 7.00, 7.27, 6.15, 4.35, 0.67, 1.89, 0.03, 0.04, 1.13};
@@ -17,30 +19,106 @@ public class Main {
 
 
     public static void main(String[] args) {
+        // Geheimtext auswählen
+        String geheimtext = GEHEIMTEXT_5;
+        double[] relHSprache = REL_H_DEUTSCH;
+        // Abstände von Wiederholungssequenzen bestimmen
+        List<Integer> abstaende = findeAbstaendeVonWiederholungen(geheimtext);
+        // Primfaktorzerlegungen der Abstandszahlen bestimmen
+        for (Integer abstand : abstaende) {
+            System.out.println(abstand + " : " + gibPrimfaktoren(abstand));
+        }
 
-        String word = GEHEIMTEXT_2;
+        int schluesselwortlaenge = 223;
 
-        word = helper.makeUsebleString(word);
+        // Buchstaben des Geheimtexts nach Schlüsselwortlänge in Gruppen aufteilen
+        String[] gruppen = teileAufInGruppen(geheimtext, schluesselwortlaenge);
+        String besterSchluessel = "";
+        for (String gruppe : gruppen) {
+            // Häufigkeitsverteilung je Gruppe bestimmen
+            double[] relH = berechneRelativeHaeufigkeiten(gruppe);
+            // wahrscheinlichsten Caesar-Schlüssel für Gruppe bestimmen
+            // und als Buchstabe dem Schlüsselwort hinzufügen
+            besterSchluessel += bestimmeBestenCaesarSchluessel(relH, relHSprache);
+        }
+// wahrscheinlichstes Schlüsselwort auf der Konsole ausgeben
+        System.out.println(besterSchluessel);
+// Schlüsselwort auf der Konsole abfragen
+        System.out.println("Schlüsselwort?");
+        String schluesselwort = besterSchluessel;
+// Geheimtext mit Schlüsselwort entschlüsseln
+        System.out.println(Vigenere.decrypt(geheimtext, schluesselwort));
+    }
 
-        ArrayList<Integer> sub =  Kasiski.findRepeatedSequenceDistances(word);
+    public static char bestimmeBestenCaesarSchluessel(double[] relH, double[] relHSprache) {
+        int besterSchluessel = 0;
+        double kleinsteAbweichung = Double.POSITIVE_INFINITY;
+        for (int schluessel = 0; schluessel < 26; schluessel++) {
+            double abweichung = 0;
+            for (int i = 0; i < 26; i++) {
+                abweichung += Math.abs(relH[(i + schluessel) % 26] - relHSprache[i]);
+            }
+            if (abweichung < kleinsteAbweichung) {
+                kleinsteAbweichung = abweichung;
+                besterSchluessel = schluessel;
+            }
+        }
+        return (char) ('A' + besterSchluessel);
+    }
 
-        System.out.println("Sub: " + sub);
+    public static double[] berechneRelativeHaeufigkeiten(String text) {
+        int[] absH = new int[26];
+        double[] relH = new double[26];
+        int anzahl = 0;
+        for (char buchstabe : text.toCharArray()) {
+            absH[buchstabe - 65]++;
+            anzahl++;
+        }
+        for (int pos = 0; pos < 26; pos++) {
+            relH[pos] = 100.0 * absH[pos] / anzahl;
+        }
+        return relH;
+    }
 
-        int wordLength = Kasiski.keyWordLength(sub);
+    public static String[] teileAufInGruppen(String text, int anzahl) {
+        String[] gruppen = new String[anzahl];
+        Arrays.fill(gruppen, "");
+        for(int pos = 0; pos < text.length(); pos++) {
+            gruppen[pos % anzahl] += text.charAt(pos);
+        }
+        return gruppen;
+    }
 
-        System.out.println("Lenght: " + wordLength);
+    public static List<Integer> gibPrimfaktoren(int zahl) {
+        List<Integer> primfaktoren = new ArrayList<>();
+        for (int teiler = 2; teiler * teiler <= zahl; teiler++) {
+            while (zahl % teiler == 0) {
+                primfaktoren.add(teiler);
+                zahl /= teiler;
+            }
+        }
+        if (zahl > 1) {
+            primfaktoren.add(zahl);
+        }
+        return primfaktoren;
+    }
 
-        String key = Kasiski.frequencyAnalysis(word, wordLength);
-
-        System.out.println("Key: " + key);
-
-        String outWord = Vigenere.decrypt(word, key);
-
-        System.out.println("Out Word: " + outWord);
-
-        // 5, 3 und 7 kommt nichts sinnvolles herraus
-
-
+    public static List<Integer> findeAbstaendeVonWiederholungen(String text) {
+        List<Integer> abstaende = new ArrayList<>();
+        for(int musterlaenge = 6; musterlaenge > 3 ; musterlaenge--) {
+            for (int start = 0; start < text.length() - musterlaenge + 1; start++) {
+                String muster = text.substring(start, start + musterlaenge);
+                for (int pos = start + 1; pos < text.length(); pos++) {
+                    if (text.startsWith(muster, pos)) {
+                        int abstand = pos - start;
+                        if (!abstaende.contains(abstand)) {
+                            abstaende.add(abstand);
+                        }
+                    }
+                }
+            }
+        }
+        return abstaende;
     }
 
 }

@@ -72,7 +72,7 @@ public class Kasiski {
                 word.append(wholeWord.charAt(j + i));
             }
 
-            double[] wsk = helper.countChars(word.toString());
+            double[] wsk = helper.berechneRelativeHaeufigkeiten(word.toString());
             char chr = bestimmeBestenCaesarSchluessel(wsk, REL_H_DEUTSCH);
             keyWord.append(chr);
         }
