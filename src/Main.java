@@ -18,27 +18,36 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String word = GEHEIMTEXT_2;
+//        String word = GEHEIMTEXT_2;
+//
+//        word = helper.makeUsebleString(word);
+//
+//        ArrayList<Integer> sub =  Kasiski.findRepeatedSequenceDistances(word);
+//
+//        System.out.println("Sub: " + sub);
+//
+//        int wordLength = Kasiski.keyWordLength(sub);
+//
+//        System.out.println("Lenght: " + wordLength);
+//
+//        String key = Kasiski.frequencyAnalysis(word, wordLength);
+//
+//        System.out.println("Key: " + key);
+//
+//        String outWord = Vigenere.decrypt(word, key);
+//
+//        System.out.println("Out Word: " + outWord);
+//
+//        // 5, 3 und 7 kommt nichts sinnvolles herraus
 
-        word = helper.makeUsebleString(word);
 
-        ArrayList<Integer> sub =  Kasiski.findRepeatedSequenceDistances(word);
+       System.out.println(Caesar.decryptChar('R', 3));
 
-        System.out.println("Sub: " + sub);
+       String s = "XLTVPRIX";
 
-        int wordLength = Kasiski.keyWordLength(sub);
 
-        System.out.println("Lenght: " + wordLength);
+       Kolonne.encrypt("Hallo", "90");
 
-        String key = Kasiski.frequencyAnalysis(word, wordLength);
-
-        System.out.println("Key: " + key);
-
-        String outWord = Vigenere.decrypt(word, key);
-
-        System.out.println("Out Word: " + outWord);
-
-        // 5, 3 und 7 kommt nichts sinnvolles herraus
 
 
     }
