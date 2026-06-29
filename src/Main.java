@@ -41,12 +41,14 @@ public class Main {
 //        // 5, 3 und 7 kommt nichts sinnvolles herraus
 
 
-       System.out.println(Caesar.decryptChar('R', 3));
+       //System.out.println(Caesar.decryptChar('R', 3));
 
        String s = "XLTVPRIX";
 
 
-       Kolonne.encrypt("Hallo", "90");
+       System.out.println(Kolonne.encrypt("GUTENTAG", "2725160298"));
+
+       System.out.println(Kolonne.decrypt("AVCVTGINI", "2725160298"));
 
 
 
