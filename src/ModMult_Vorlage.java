@@ -7,35 +7,6 @@ public class ModMult_Vorlage {
      *  Modulare Inverse: d * e = 1 (mod n)
      */
 
-    public static int ea(int a, int b) {
-        if (b == 0) {
-            return a;
-        }
-
-        return ea(b, a % b);    // a_neu = b_alt, b_neu = a_alt % b_alt
-    }
-
-    public static int[] eea(int a, int b) {
-        if (b == 0) {
-            return new int[] { 1, 0 };
-        }
-
-        int[] xy = eea(b, a % b);           // a_neu = b_alt
-        // b_neu = a_alt % b_alt
-
-        int x = xy[1];                      // x_neu = y_alt
-        int y = xy[0] - (a / b) * xy[1];    // y_neu = x_alt - (a / b) * y_alt
-
-        return new int[]{x, y};
-    }
-
-    public static void main(String[] argv) {
-        System.out.println("ggT(d,N) = " + ea(120, 23));
-        System.out.println("e = " + eea(120, 23)[1]);
-    }
-
-    // ###################################################################################
-
     // öffentlicher Schlüssel
     private static BigInteger e = new BigInteger("49");
     // geheimer Schlüssel
@@ -43,14 +14,59 @@ public class ModMult_Vorlage {
     // Modulzahl
     private static BigInteger n = new BigInteger("1000010000100001000010000100001000010000100001000010000");
 
+    // ###################################################################################
+
+    public static BigInteger ggt(BigInteger a, BigInteger b) {
+        if (b.equals(BigInteger.ZERO)) {
+            return a;
+        }
+
+        return ggt(b, a.remainder(b));    // a_neu = b_alt, b_neu = a_alt % b_alt
+    }
+
+    public static BigInteger[] modInv(BigInteger a, BigInteger b) {
+        if (b.equals(BigInteger.ZERO)) {
+            return new BigInteger[]{BigInteger.ONE, BigInteger.ZERO};
+        }
+
+        BigInteger[] xy = modInv(b, a.remainder(b));           // a_neu = b_alt
+        // b_neu = a_alt % b_alt
+
+        BigInteger x = xy[1];                      // x_neu = y_alt
+        BigInteger y = xy[0].subtract(a.divide(b).multiply(xy[1]));    // y_neu = x_alt - (a / b) * y_alt
+
+        return new BigInteger[]{x, y};
+    }
+
+    public static void main(String[] argv) {
+        BigInteger a = new BigInteger("120");
+        BigInteger b = new BigInteger("23");
+
+        System.out.println("ggT(d,N) = " + ggt(n, d));
+        System.out.println("e = " + modInv(n, d)[1]);
+
+        System.out.println(stringToBigInt("AMOIN_BEN"));
+    }
+
     public static BigInteger stringToBigInt(String text) {
-        String zahl = "";
+        StringBuilder zahl = new StringBuilder();
 
         for (int i = 0; i < text.length(); i++) {
             // ... selber machen ...
-        }
+            char c = text.charAt(i);
 
-        return new BigInteger(zahl);
+            if (c == '_') {
+                zahl.append("00");
+            } else {
+                int zeichen = (text.charAt(i) - 64);
+                if (zeichen < 10) {
+                    zahl.append("0");
+                }
+                zahl.append(zeichen);
+            }
+
+        }
+        return new BigInteger(zahl.toString());
     }
 
     public static String bigIntToString(BigInteger zahl) {
