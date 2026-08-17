@@ -58,11 +58,8 @@ public class ModMult_Vorlage {
             if (c == '_') {
                 zahl.append("00");
             } else {
-                int zeichen = (text.charAt(i) - 64);
-                if (zeichen < 10) {
-                    zahl.append("0");
-                }
-                zahl.append(zeichen);
+                int zeichen = c - 64;
+                zahl.append(zeichen < 10 ? "0" + zeichen : zeichen);
             }
 
         }
