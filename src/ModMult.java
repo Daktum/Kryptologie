@@ -1,6 +1,6 @@
 import java.math.BigInteger;
 
-public class ModMult_Vorlage {
+public class ModMult {
 
     /*
      *  Schlüsselbedingung: ggT(d, n) = 1
@@ -14,6 +14,16 @@ public class ModMult_Vorlage {
     // Modulzahl
     private static BigInteger n = new BigInteger("1000010000100001000010000100001000010000100001000010000");
 
+    public static BigInteger encrypt(String text){
+        BigInteger m = stringToBigInt(text);
+        return m.multiply(d).mod(n);
+    }
+
+    public static String decrypt(BigInteger c){
+        BigInteger m = c.multiply(e).mod(n);
+        return bigIntToString(m);
+    }
+
     // ###################################################################################
 
     public static BigInteger ggt(BigInteger a, BigInteger b) {
@@ -21,7 +31,7 @@ public class ModMult_Vorlage {
             return a;
         }
 
-        return ggt(b, a.remainder(b));    // a_neu = b_alt, b_neu = a_alt % b_alt
+        return ggt(b, a.mod(b));    // a_neu = b_alt, b_neu = a_alt % b_alt
     }
 
     public static BigInteger[] modInv(BigInteger a, BigInteger b) {
@@ -29,7 +39,7 @@ public class ModMult_Vorlage {
             return new BigInteger[]{BigInteger.ONE, BigInteger.ZERO};
         }
 
-        BigInteger[] xy = modInv(b, a.remainder(b));           // a_neu = b_alt
+        BigInteger[] xy = modInv(b, a.mod(b));           // a_neu = b_alt
         // b_neu = a_alt % b_alt
 
         BigInteger x = xy[1];                      // x_neu = y_alt
@@ -45,7 +55,11 @@ public class ModMult_Vorlage {
         System.out.println("ggT(d,N) = " + ggt(n, d));
         System.out.println("e = " + modInv(n, d)[1]);
 
-        System.out.println(stringToBigInt("AMOIN_BEN"));
+        System.out.println(encrypt("KRYPTOLOGIE_MACHT_SPASS"));
+
+
+        System.out.println(decrypt(encrypt("KRYPTOLOGIE_MACHT_SPASS")));
+
     }
 
     public static BigInteger stringToBigInt(String text) {
@@ -61,7 +75,6 @@ public class ModMult_Vorlage {
                 int zeichen = c - 64;
                 zahl.append(zeichen < 10 ? "0" + zeichen : zeichen);
             }
-
         }
         return new BigInteger(zahl.toString());
     }
@@ -74,18 +87,18 @@ public class ModMult_Vorlage {
             ziffern = "0" + ziffern;
         }
 
-        String text = "";
+        StringBuilder text = new StringBuilder();
 
         for (int i = 0; i < ziffern.length(); i += 2) {
             int wert = Integer.parseInt(ziffern.substring(i, i + 2));
 
             if (wert == 0) {
-                text += "_";
+                text.append("_");
             } else {
-                text += (char) ('A' + wert - 1);
+                text.append((char) ('A' + wert - 1));
             }
         }
 
-        return text;
+        return text.toString();
     }
 }

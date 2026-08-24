@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Scanner;
 
 public class Main {
 
@@ -17,41 +19,53 @@ public class Main {
 
 
     public static void main(String[] args) {
+//
+//        RSA alice = new RSA();
+//        System.out.println(alice);
+//
+//        RSA bob = new RSA();
+//        System.out.println(bob);
+//
+//        // Alice verschlüsselt die Nachricht 123456 für Bob
+//        BigInteger cypher = alice.encrypt(new BigInteger("123456"), bob.getE(), bob.getN());
+//        System.out.println("cypher = " + cypher);
+//        BigInteger message = bob.decrypt(cypher);
+//        System.out.println("message = " + message);
 
-//        String word = GEHEIMTEXT_2;
-//
-//        word = helper.makeUsebleString(word);
-//
-//        ArrayList<Integer> sub =  Kasiski.findRepeatedSequenceDistances(word);
-//
-//        System.out.println("Sub: " + sub);
-//
-//        int wordLength = Kasiski.keyWordLength(sub);
-//
-//        System.out.println("Lenght: " + wordLength);
-//
-//        String key = Kasiski.frequencyAnalysis(word, wordLength);
-//
-//        System.out.println("Key: " + key);
-//
-//        String outWord = Vigenere.decrypt(word, key);
-//
-//        System.out.println("Out Word: " + outWord);
-//
-//        // 5, 3 und 7 kommt nichts sinnvolles herraus
+        RSA bene = new RSA();
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the RSA Public Key Generator");
+        System.out.println("E: " + bene.getE());
+        System.out.println("N: " + bene.getN());
 
 
-       //System.out.println(Caesar.decryptChar('R', 3));
-
-       String s = "XLTVPRIX";
+        System.out.println(bene.toString());
 
 
-       System.out.println(Kolonne.encrypt("GUTENTAG", "2725160298"));
 
-       System.out.println(Kolonne.decrypt("AVCVTGINI", "2725160298"));
+
+        System.out.println("Cypher: ");
+        BigInteger cypher = new BigInteger(ModMult.stringToBigInt(scanner.nextLine()).toByteArray());
+
+        BigInteger message = bene.decrypt(cypher);
+
+
+        System.out.print("E: ");
+        BigInteger E = new BigInteger(scanner.nextLine());
+
+        System.out.print("N: ");
+        BigInteger N = new BigInteger(scanner.nextLine());
+
+        System.out.println("E: " + E);
+        System.out.println("N: " + N);
 
 
 
     }
+
+
+
 
 }
